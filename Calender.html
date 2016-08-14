@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  
+  <script>
+  $(document).ready(function(){
+
+  });
+  </script>
+  
+</head>
+<body>
+<script type="text/javascript">
+
+
+function IsLeapYear(chkVal){
+	if( (chkVal%4)==0 && (chkVal%100) !=0 ){
+		return	true;
+	}else if((chkVal%400)==0){
+		return	true;
+	
+	}else{
+		return false;
+	} 
+}
+
+WriteTableHeader(){
+	document.write("<table border='1'>"
+);      // 表の作成開始};
+
+WriteTableFooter(){
+	document.write("</table>");                                // 表の終わり
+}
+function WriteHeader(myYear, myMonth){
+   document.write("<tr>");
+   document.write("<td colspan='7' bgcolor='#7fffd4'>");  // 見出し行セット
+   document.write("<strong>",myYear, "年", (myMonth+1), "月カレンダー</strong>");
+   document.write("</td>");
+   document.write("</tr>");
+
+}
+
+function WriteDay(myWeekTbl){
+	document.write("<tr>");                                    // 曜日見出しセット
+	for(i=0; i<7; i++){                                        // 一行(１週間)ループ
+	   document.write("<td align='center' ");
+	   if(i==0)document.write("bgcolor='#fa8072'>");           // 日曜のセルの色
+	   else    document.write("bgcolor='#ffebcd'>");           // 月～土のセルの色
+	   document.write("<strong>",myWeekTbl[i],"</strong>");    // '日'から'土'の表示
+	   document.write("</td>");
+	}
+	document.write("</tr>");
+
+
+}
+
+function WriteDate(myTblLine, myTable){
+	for(i=0; i<myTblLine; i++){                                // 表の「行」のループ
+   document.write("<tr>");                                 // 行の開始
+   for(j=0; j<7; j++){                                     // 表の「列」のループ
+      document.write("<td align='center' ");               // 列(セル)の作成
+      myDat = myTable[j+(i*7)];                            // 書きこむ内容の取得
+      if (myDat==myToday)document.write("bgcolor='#00ffff'>"); // 今日のセルの色
+      else if(j==0)      document.write("bgcolor='#ffb6c1'>"); // 日曜のセルの色
+      else               document.write("bgcolor='#ffffe0'>"); // 平日のセルの色
+      document.write("<strong>",myDat,"</strong>");        // 日付セット
+      document.write("</td>");                             // 列(セル)の終わり
+   }
+   document.write("</tr>");                                // 行の終わり
+	}
+
+}
+
+var myWeekTbl = new Array("日","月","火","水","木","金","土");  // 曜日テーブル定義
+var myMonthTbl= new Array(31,28,31,30,31,30,31,31,30,31,30,31);// 月テーブル定義
+var myDate    = new Date();                                    // 今日の日付データ取得
+var myYear = myDate.getFullYear();                                 // 年の取得
+if (IsLeapYear(myYear)){
+   myMonthTbl[1] = 29;   // うるう年                                   // 　２月を２９日とする
+}
+
+
+myMonth = myDate.getMonth();                               // 月を取得(0月～11月)
+myToday = myDate.getDate();                                // 今日の'日'を退避
+myDate.setDate(1);                                         // 日付を'１日'に変えて、'１日'の曜日を取得
+myWeek = myDate.getDay();                                  
+
+
+
+
+myTblLine = Math.ceil( ( myWeek + myMonthTbl[myMonth] ) /7 );     // カレンダーの行数
+myTable   = new Array(7*myTblLine);                        // 表のセル数分定義
+
+for(i=0; i<7*myTblLine; i++) 
+{myTable[i]="　";}              // myTableを空白でクリア
+
+for(i=0; i<myMonthTbl[myMonth]; i++)
+{
+	myTable[i+myWeek]=i+1; 
+}// 日付を埋め込む
+
+
+
+
+
+
+WriteTableHeader();
+WriteHeader(myYear,myMonth);
+WriteDay(myWeekTbl);
+WriteDate(myTblLine, myTable);
+WriteTableFooter();
+
+</script>
+
+  <script type="text/javascript">
+
+  	function Hearder(){
+  		document.write("<table border=\'1' >");
+  		
+  	}
+  	function Footer(){
+  		document.write("</table>");
+  		
+  	}
+  	
+  	function Th(){
+  		var Day = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
+  		
+  		document.write("<tr>");
+  		
+  		for(var i=0; i < Day.length ; i++)
+  		{
+  			document.write("<th>" + Day[i]  + "</th>");
+  		}
+  		document.write("</tr>");
+  		
+  	}
+  	
+  	function TdRow(){
+  		document.write("<tr>");
+  		
+  		for(var i=0; i < 7 ; i++)
+  		{
+  			document.write("<td>aaa</td>");
+  		}
+  		document.write("</tr>");
+
+  	
+  	}
+  	 Hearder();
+  	 Th();
+  	 TdRow();
+  	 Footer();
+  	
+   </script>
+   <!--
+    <tr><td>TD #0</td><td>TD #1</td><td>TD #2</td></tr>
+
+    <tr><td>TD #3</td><td>TD #4</td><td>TD #5</td></tr>
+    <tr><td>TD #6</td><td>TD #7</td><td>TD #8</td></tr>
+    -->
+  </table>
+</body>
+</html>
+            

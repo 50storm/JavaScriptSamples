@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+<title>テーブルのソート</title>
+<script>
+var tds = [
+  ["メラ", "  2"],
+  ["メラミ", "  6"],
+  ["トラマナ", "  2"]
+];
+
+$(function() {
+  
+  function draw() {
+    var tag = '';
+    //連想配列から、テーブルの行をセット
+    $.each(tds, function(i, val) {
+      tag += '<tr><td>'+ val[0] + '</td><td>' + val[1] + '</td></tr>';
+    });
+    $('tbody').html(tag);
+  }
+
+  $('th').click(function() {
+    var arrow = $('span', this);
+    var col = $('th').index(this);
+    if (arrow.html() == '▼') {
+      arrow.html('▲');
+      tds.sort(function(a, b) { return a[col] < b[col] ? -1 : 1; });
+    } else {
+      arrow.html('▼');
+      tds.sort(function(a, b) { return b[col] < a[col] ? -1 : 1; });
+    }
+    $(this).siblings().find('span').html('');
+    draw();
+
+  });
+
+  draw();
+});
+</script>
+<style>
+th, td {
+  border: 1px solid black;
+  padding: 2px;
+}
+th {
+  background-color: #ccc;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<table><thead><tr><th>名前<span></span></th><th>消費ＭＰ<span></span></th></tr></thead><tbody></tbody></table>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>HTML5サンプル</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+//alert("hello");
+//http://so-zou.jp/web-app/tech/programming/javascript/dom/node/element/html/table/
+
+ //検索ボタンクリック
+ $(document).on("click", "[id='seach']", function() {
+      var key = document.getElementById('search_word').value;
+
+      var table = document.getElementById('testTable');
+
+       //console.log(table.rows);//tr
+       //console.log(table.rows.length);
+       //console.log(table.rows.item(0).cells.item(0));
+       // console.log(table.rows[0].cells[0].firstChild.data);//Key
+       /*
+        for(i=0; i<table.rows[0].cells.length; i++){
+            console.log(table.rows[0].cells[i].firstChild.data);
+            //Key
+            //Value1
+            //Value2
+            console.log(table.rows[0].cells[i].tagName);///TH
+
+
+        }
+        for(i=0; i<table.rows[1].cells.length; i++){
+            console.log(table.rows[1].cells[i].firstChild.data);
+            console.log(table.rows[1].cells[i].tagName);
+            
+
+        }
+        */
+        //テーブルの全部出力
+      for( var i = 0; i < table.rows.length; i++ )
+      {
+          for(var j=0; j<table.rows[i].cells.length; j++){
+            console.log(table.rows[i].cells[j].firstChild.data);
+            //console.log(table.rows[i].cells[j].tagName);
+            
+          }
+      }
+
+
+      for( var i = 0; i < table.rows.length; i++ )
+      {
+        table.rows[i].cells[0].style.backgroundColor="white";  
+        table.rows[i].cells[0+1].style.backgroundColor="white";  
+           
+      }
+
+      //1列目前駆出力
+      for( var i = 0; i < table.rows.length; i++ )
+      {
+          //for(var j=0; j<table.rows[i].cells.length; j++){
+            //console.log(table.rows[i].cells[0].firstChild.data);
+            if(key == table.rows[i].cells[0].firstChild.data)
+            {
+              table.rows[i].cells[0].style.backgroundColor="red";  
+              table.rows[i].cells[0+1].style.backgroundColor="red";  
+           
+              return ;
+            }
+            //console.log(table.rows[i].cells[j].tagName);
+            
+          //}
+      }
+  
+  
+
+
+
+ });
+
+/*
+ // grep
+ $(document).on("click", "[id='seach']", function() {
+  $('#testTable').each(function () {
+   $(this).find('td').each(function () {
+    if($(this).text().match(new RegExp($('#search_word').val(),"g"))) {
+     $(this).attr('style', 'background-color:yellow');
+    } else {
+     $(this).attr('style', '');
+    }
+   });
+  });
+ });
+*/
+});
+</script>
+</head>
+<body>
+<br />
+テキストボックスに検索したい文字を入力&#12289;検索ボタンをクリックすると&#12289;
+<br />
+入力した文字列が含まれるセルの背景色が黄色に変わります&#12290;<br />
+<br />
+<input type="text" id="search_word">
+<button type="button" id="seach"> Search </button>
+<table id="testTable" border ="1">
+<tr>
+<th>Key</th><th>Value1</th><th>Value2</th>
+</tr>
+<script type="text/javascript">
+for (i=0; i<=10;i++){
+	document.write("<tr>");
+	document.write("<td class=\"code\">" + i + "</td>");
+	document.write("<td>" + Math.floor(Math.random() *1000) + "</td>");
+  document.write("<td>" + Math.floor(Math.random() *2000) + "</td>");
+	document.write("</tr>");
+}
+</script>
+</table>
+</body>
+</html>

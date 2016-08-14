@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>HTML5サンプル</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+//alert("hello");
+
+ //検索ボタンクリック
+ $(document).on("click", "[id='seach']", function() {
+  $('#testTable').each(function () {
+   $(this).find('td.code').each(function () {
+    $(this).next().attr('style', '');
+   }); 
+   $(this).find('td.code').each(function () {
+    if($(this).text() == $('#search_word').val()) {
+    	//alert($(this).next().text());
+     	$(this).next().attr('style', 'background-color:yellow');
+     	return false;
+    } else {
+     $(this).next().attr('style', '');
+    }
+   });
+  });
+ });
+
+/*
+ // grep
+ $(document).on("click", "[id='seach']", function() {
+  $('#testTable').each(function () {
+   $(this).find('td').each(function () {
+    if($(this).text().match(new RegExp($('#search_word').val(),"g"))) {
+     $(this).attr('style', 'background-color:yellow');
+    } else {
+     $(this).attr('style', '');
+    }
+   });
+  });
+ });
+*/
+});
+</script>
+</head>
+<body>
+<br />
+テキストボックスに検索したい文字を入力&#12289;検索ボタンをクリックすると&#12289;
+<br />
+入力した文字列が含まれるセルの背景色が黄色に変わります&#12290;<br />
+<br />
+<input type="text" id="search_word">
+<button type="button" id="seach"> Search </button>
+<table id="testTable" border ="1">
+<tr>
+<th>Key</th><th>Value1</th><th>Value2</th>
+</tr>
+<script type="text/javascript">
+for (i=0; i<=10;i++){
+	document.write("<tr>");
+	document.write("<td class=\"code\">" + i + "</td>");
+	document.write("<td>" + Math.floor(Math.random() *1000) + "</td>");
+  document.write("<td>" + Math.floor(Math.random() *2000) + "</td>");
+	document.write("</tr>");
+}
+</script>
+</table>
+</body>
+</html>
