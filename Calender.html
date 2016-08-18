@@ -2,6 +2,7 @@
                     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta charset="UTF-8" />
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   
   <script>
@@ -13,9 +14,9 @@
 </head>
 <body>
 <script type="text/javascript">
-
-
-function IsLeapYear(chkVal){
+//NameSpace的にまとめた。。
+var Calendar = [];
+Calendar.IsLeapYear = function(chkVal){
 	if( (chkVal%4)==0 && (chkVal%100) !=0 ){
 		return	true;
 	}else if((chkVal%400)==0){
@@ -25,30 +26,29 @@ function IsLeapYear(chkVal){
 		return false;
 	} 
 }
-
-WriteTableHeader(){
-	document.write("<table border='1'>"
-);      // 表の作成開始};
-
-WriteTableFooter(){
-	document.write("</table>");                                // 表の終わり
+Calendar.WriteTableHeader =function ()
+{
+	document.write("<table border=\'1\'>");
 }
-function WriteHeader(myYear, myMonth){
+
+Calendar.WriteTableFooter =function (){
+	document.write("</table>");                               
+}
+Calendar.WriteHeader = function (myYear, myMonth){
    document.write("<tr>");
-   document.write("<td colspan='7' bgcolor='#7fffd4'>");  // 見出し行セット
-   document.write("<strong>",myYear, "年", (myMonth+1), "月カレンダー</strong>");
+   document.write("<td colspan='7' bgcolor='#7fffd4'>");  
+   document.write("<strong>",myYear, "年", (myMonth+1), "月 Calender</strong>");
    document.write("</td>");
    document.write("</tr>");
 
 }
-
-function WriteDay(myWeekTbl){
-	document.write("<tr>");                                    // 曜日見出しセット
-	for(i=0; i<7; i++){                                        // 一行(１週間)ループ
+Calendar.WriteDay = function (myWeekTbl){
+	document.write("<tr>");                                    
+	for(i=0; i<7; i++){                                        
 	   document.write("<td align='center' ");
-	   if(i==0)document.write("bgcolor='#fa8072'>");           // 日曜のセルの色
-	   else    document.write("bgcolor='#ffebcd'>");           // 月～土のセルの色
-	   document.write("<strong>",myWeekTbl[i],"</strong>");    // '日'から'土'の表示
+	   if(i==0)document.write("bgcolor='#fa8072'>");           
+	   else    document.write("bgcolor='#ffebcd'>");           
+	   document.write("<strong>",myWeekTbl[i],"</strong>");    
 	   document.write("</td>");
 	}
 	document.write("</tr>");
@@ -56,111 +56,58 @@ function WriteDay(myWeekTbl){
 
 }
 
-function WriteDate(myTblLine, myTable){
-	for(i=0; i<myTblLine; i++){                                // 表の「行」のループ
-   document.write("<tr>");                                 // 行の開始
-   for(j=0; j<7; j++){                                     // 表の「列」のループ
-      document.write("<td align='center' ");               // 列(セル)の作成
-      myDat = myTable[j+(i*7)];                            // 書きこむ内容の取得
-      if (myDat==myToday)document.write("bgcolor='#00ffff'>"); // 今日のセルの色
-      else if(j==0)      document.write("bgcolor='#ffb6c1'>"); // 日曜のセルの色
-      else               document.write("bgcolor='#ffffe0'>"); // 平日のセルの色
-      document.write("<strong>",myDat,"</strong>");        // 日付セット
-      document.write("</td>");                             // 列(セル)の終わり
+Calendar.WriteDate = function (myTblLine, myTable){
+	for(i=0; i<myTblLine; i++){                               
+   document.write("<tr>");                                 
+   for(j=0; j<7; j++){                                     
+      document.write("<td align='center' ");               
+      myDat = myTable[j+(i*7)];                            
+      if (myDat==Calendar.myToday)document.write("bgcolor='#00ffff'>");
+      else if(j==0)      document.write("bgcolor='#ffb6c1'>");
+      else               document.write("bgcolor='#ffffe0'>");
+      document.write("<strong>",myDat,"</strong>");        
+      document.write("</td>");                             
    }
-   document.write("</tr>");                                // 行の終わり
+   document.write("</tr>");                                
 	}
 
 }
 
-var myWeekTbl = new Array("日","月","火","水","木","金","土");  // 曜日テーブル定義
-var myMonthTbl= new Array(31,28,31,30,31,30,31,31,30,31,30,31);// 月テーブル定義
-var myDate    = new Date();                                    // 今日の日付データ取得
-var myYear = myDate.getFullYear();                                 // 年の取得
-if (IsLeapYear(myYear)){
-   myMonthTbl[1] = 29;   // うるう年                                   // 　２月を２９日とする
+Calendar.myWeekTbl = new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat")
+Calendar.myMonthTbl= new Array(31,28,31,30,31,30,31,31,30,31,30,31);
+Calendar.myDate    = new Date();
+Calendar.myYear = Calendar.myDate.getFullYear();
+if (Calendar.IsLeapYear(Calendar.myYear)){
+   Calendar.myMonthTbl[1] = 29;  
 }
 
 
-myMonth = myDate.getMonth();                               // 月を取得(0月～11月)
-myToday = myDate.getDate();                                // 今日の'日'を退避
-myDate.setDate(1);                                         // 日付を'１日'に変えて、'１日'の曜日を取得
-myWeek = myDate.getDay();                                  
+Calendar.myMonth = Calendar.myDate.getMonth();
+Calendar.myToday = Calendar.myDate.getDate(); 
+Calendar.myDate.setDate(1);          
+Calendar.myWeek = Calendar.myDate.getDay();   
 
 
 
 
-myTblLine = Math.ceil( ( myWeek + myMonthTbl[myMonth] ) /7 );     // カレンダーの行数
-myTable   = new Array(7*myTblLine);                        // 表のセル数分定義
+Calendar.myTblLine = Math.ceil( ( Calendar.myWeek + Calendar.myMonthTbl[Calendar.myMonth] ) /7 );
+Calendar.myTable   = new Array(7*Calendar.myTblLine);
 
-for(i=0; i<7*myTblLine; i++) 
-{myTable[i]="　";}              // myTableを空白でクリア
+for(i=0; i<7*Calendar.myTblLine; i++) 
+{Calendar.myTable[i]="";}
 
-for(i=0; i<myMonthTbl[myMonth]; i++)
+for(i=0; i<Calendar.myMonthTbl[Calendar.myMonth]; i++)
 {
-	myTable[i+myWeek]=i+1; 
-}// 日付を埋め込む
+	Calendar.myTable[i+Calendar.myWeek]=i+1; 
+}
 
 
-
-
-
-
-WriteTableHeader();
-WriteHeader(myYear,myMonth);
-WriteDay(myWeekTbl);
-WriteDate(myTblLine, myTable);
-WriteTableFooter();
-
-</script>
-
-  <script type="text/javascript">
-
-  	function Hearder(){
-  		document.write("<table border=\'1' >");
-  		
-  	}
-  	function Footer(){
-  		document.write("</table>");
-  		
-  	}
-  	
-  	function Th(){
-  		var Day = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
-  		
-  		document.write("<tr>");
-  		
-  		for(var i=0; i < Day.length ; i++)
-  		{
-  			document.write("<th>" + Day[i]  + "</th>");
-  		}
-  		document.write("</tr>");
-  		
-  	}
-  	
-  	function TdRow(){
-  		document.write("<tr>");
-  		
-  		for(var i=0; i < 7 ; i++)
-  		{
-  			document.write("<td>aaa</td>");
-  		}
-  		document.write("</tr>");
-
-  	
-  	}
-  	 Hearder();
-  	 Th();
-  	 TdRow();
-  	 Footer();
-  	
+Calendar.WriteTableHeader();
+Calendar.WriteHeader(Calendar.myYear,Calendar.myMonth);
+Calendar.WriteDay(Calendar.myWeekTbl);
+Calendar.WriteDate(Calendar.myTblLine, Calendar.myTable);
+Calendar.WriteTableFooter();
    </script>
-   <!--
-    <tr><td>TD #0</td><td>TD #1</td><td>TD #2</td></tr>
-
-    <tr><td>TD #3</td><td>TD #4</td><td>TD #5</td></tr>
-    <tr><td>TD #6</td><td>TD #7</td><td>TD #8</td></tr>
-    -->
   </table>
 </body>
 </html>
