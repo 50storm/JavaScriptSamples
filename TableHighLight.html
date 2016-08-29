@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+ <html lang="ja">
+ <head>
+ <meta charset="SJIS">
+<title>ハイライト テーブル javascript</title>
+<style type="text/css">
+#TBL{
+ 　background-color: #fffafa; /* 背景色 */
+   border-collapse: collapse; /* 枠線の重なり：結合 */
+ 　border: 2px solid #0000ff; /* ボーダー : 幅,線種,色 */
+  　}
+
+#TBL thead {
+  border-bottom:3px #0000ff double;
+    }
+
+#TBL th{
+ color: #030303;
+ background-color: #dbdbdb;
+ padding: 5px 7px;  /* 余白：上下　左右；*/
+ border:1px #0000ff solid;
+  }
+
+#TBL td{
+ color:#800000;
+ background-color:inherit; /* inherit 親要素の値を継承*/
+ padding:5px 7px;
+ border:1px #008000 solid;
+  }
+ </style>
+ 
+ <script>
+window.onload = hLightTBL;
+
+function hLightTBL() {
+ 	var Tbl =document.getElementById("TBL"); // <table> ID名
+ 	var BgClr = "#d2e9ff"; // マウスが上に来た時の行、列の背景色
+ 	var CellClr="pink";  // マウスが上に来た時のセルの背景色
+		
+	for(var i=0;i<Tbl.rows.length;i++) {// 行 位置取得
+ 		for(var j=0;j<Tbl.rows[i].cells.length;j++) { // 行内 セル位置取得
+	  		Tbl.rows[i].cells[j].onmouseover = function(){ 
+  											// マウスが重なったら cellTBLを実行
+                							//cellTBL(this,BgClr,CellClr);
+              				                //「this」現在マウスが重なっているtd要素
+              				                
+              				                this.style.backgroundColor =  'yellow';
+              				                this.parentNode.style.backgroundColor  =  'gray';
+              				                
+                					}
+ 		 	Tbl.rows[i].cells[j].onmouseout = function(){
+   							                 //cellTBL(this,'','');
+   							         		         this.style.backgroundColor =  '';
+   							         		         this.parentNode.style.backgroundColor  =  '';
+                                 }
+ 		}
+	}
+	
+	/*
+	function cellTBL(tgtCell,BgClr,CellClr) {
+ 		for(var i=0;i<Tbl.rows.length;i++) {
+  			Tbl.rows[i].cells[tgtCell.cellIndex].style.backgroundColor = BgClr;// 列 背景色
+	    }
+ 		tgtCell.style.backgroundColor = CellClr;// セル 背景色
+  		tgtCell.parentNode.style.backgroundColor = BgClr;// 行 背景色
+	}
+	*/
+}
+</script>
+</head>
+<body>
+<table id="TBL">
+<thead>
+ <tr>
+    <th>項目名</th>
+    <th>スタイルシート</th>
+    <th>背景設定</th>
+    <th>テーブル</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td>ドラッグ</td>
+      <td>cssTextプロパティ</td>
+      <td>背景画像設置</td>
+    <td>表の作成</td>
+</tr>
+  <tr>
+      <td>ロールオーバー</td>
+      <td>text-align プロパティ</td>
+      <td>背景 プロパティ</td>
+      <td>行のハイライト</td>
+</tr>
+   <tr>
+      <td>画像ポップアップ</td>
+      <td>display プロパティ</td>
+      <td>背景画像入れ替え</td>
+      <td>表 表示/非表示</td>
+ </tr>
+   <tr>
+      <td>ローテーションバーナ</td>
+      <td>marginプロパティ</td>
+      <td>背景 CSS</td>
+      <td>見出し行を固定</td>
+  </tr>
+    <tr>
+      <td>画像のプリロード</td>
+      <td>borderプロパティ</td>
+      <td>ツールチップ</td>
+      <td>テーブルcss生成</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>  
