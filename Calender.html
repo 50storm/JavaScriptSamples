@@ -7,15 +7,45 @@
   
   <script>
   $(document).ready(function(){
-
+	$('input[name=txt1]').on("focus", function() {
+		//alert("test");
+		//var calender = document.getElementById('table-calender').style.display = "";
+		//var calender = document.getElementById('table-calender');
+		var calender = document.getElementById('test-calender');
+		
+		calender.style.display = "";
+		
+	
+	});
+	$('input[name=txt1]').on("blur", function() {
+		var calender = document.getElementById('test-calender');	
+		calender.style.display = "none";
+	
+	});
   });
   </script>
   
 </head>
 <body>
+
+<div>
+<input type="text" name="txt1" value="フォーカス当てるとカレンダー表示" />
+</div>
+<!--
+<div id="table-calender" style="display:none;" >
+-->
+<!--
+<div id="table-calender" >
+-->
+
 <script type="text/javascript">
 //NameSpace的にまとめた。。
 var Calendar = [];
+
+Calendar.NonDisplay=function($Table){
+	$Table.style.display = "none";
+}
+
 Calendar.IsLeapYear = function(chkVal){
 	if( (chkVal%4)==0 && (chkVal%100) !=0 ){
 		return	true;
@@ -28,7 +58,7 @@ Calendar.IsLeapYear = function(chkVal){
 }
 Calendar.WriteTableHeader =function ()
 {
-	document.write("<table border=\'1\'>");
+	document.write("<table id=\'test-calender\' border=\'1\'>");
 }
 
 Calendar.WriteTableFooter =function (){
@@ -107,8 +137,14 @@ Calendar.WriteHeader(Calendar.myYear,Calendar.myMonth);
 Calendar.WriteDay(Calendar.myWeekTbl);
 Calendar.WriteDate(Calendar.myTblLine, Calendar.myTable);
 Calendar.WriteTableFooter();
+
+var $Calender = document.getElementById('test-calender');
+
+Calendar.NonDisplay( $Calender);
    </script>
-  </table>
+   <!--
+   </div>
+   -->
 </body>
 </html>
             
