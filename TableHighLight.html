@@ -34,21 +34,105 @@ window.onload = initWindow;
 
 function initWindow(){
 	var $Table = document.getElementById("table-sample");
-	highlightTableRow($Table);
+	//highlightTableRow($Table);
+	//highlightTableColGroup($Table);
+	highlightTableRowCol($Table);
 	
 }
 
 
+function highlightTableRowCol($Table){
+ 	var BG_COLOR = "lime";
+ 	var COLOR = "yellow";  
+   	 //var $sampleTable = document.getElementById( "sample" );
+     var $sampleTable = $Table;
+   
+     var $sampleColgroup = $sampleTable.getElementsByTagName( "colgroup" );//<colgroup>
+     var $sampleTHead = $sampleTable.tHead;//<theader>
+     var $sampleTHeadCells = $sampleTHead.rows[0].cells;//<th>
+     var $sampleTBodies = $sampleTable.tBodies; //<tbody>
+     //var $sampleTFoot = $sampleTable.tFoot;	//<tfooter>
+     //var $sampleTFootCells = $sampleTFoot.rows[0].cells;
+	
+	 //<tbody>の数分ループ
+     for ( var $tbodyIndex = 0; $tbodyIndex < $sampleTBodies.length; $tbodyIndex++ ) {
+     	//Rows = TRの入ってる配列
+         var $sampleTBodyRows = $sampleTBodies[$tbodyIndex].rows;
+         //縦方向へのループ(<TR>)
+         for ( var $rowIndex = 0; $rowIndex < $sampleTBodyRows.length; $rowIndex++ ) {
+             //Rows[インデックス]=TR要素=行についてのマウスオーバーと、マウスアウト
+             $sampleTBodyRows[$rowIndex].onmouseover = function(){
+                 this.style.backgroundColor = BG_COLOR;
+             };
+             $sampleTBodyRows[$rowIndex].onmouseout = function(){
+                 this.style.backgroundColor = "";
+             };
+             
+             //横方向へのループ
+             var $sampleTBodyCells = $sampleTBodyRows[$rowIndex].cells;
+             for ( var $cellIndex = 0; $cellIndex < $sampleTBodyCells.length; $cellIndex++ ) {
+                 $sampleTBodyCells[$cellIndex].onmouseover = function(){
+                     this.style.backgroundColor = COLOR; //this=$sampleTBodyCells[$cellIndex]=<TD>のこと
+                     $sampleColgroup[this.cellIndex].style.backgroundColor     = BG_COLOR;//<colgroup>
+                     $sampleTHeadCells[this.cellIndex].style.backgroundColor   = BG_COLOR;//<TH>
+                     //$sampleTFootCells[this.cellIndex].style.backgroundColor = BG_COLOR;
+                 };
+                 $sampleTBodyCells[$cellIndex].onmouseout = function(){
+                     this.style.backgroundColor = "";
+                     $sampleColgroup[this.cellIndex].style.backgroundColor     = "";
+                     $sampleTHeadCells[this.cellIndex].style.backgroundColor   = "";
+                     //$sampleTFootCells[this.cellIndex].style.backgroundColor = "";
+                 };
+             }
+         }
+     }
 
+
+
+}
+
+
+
+//列だけハイライト
+function highlightTableColGroup($Table){
+   // var $sampleTable = document.getElementById( "sample" );
+     var $sampleTable = $Table;
+   
+     var $sampleColgroup = $sampleTable.getElementsByTagName( "colgroup" );
+     var $sampleTHeadCells = $sampleTable.tHead.rows[0].cells;//theader要素
+    // var $sampleTFootCells = $sampleTable.tFoot.rows[0].cells;//tfooter要素
+     var $sampleRows = $sampleTable.rows;
+
+     for ( var $rowIndex = 0; $rowIndex < $sampleRows.length; $rowIndex++ ) {
+         var $sampleCells = $sampleRows[$rowIndex].cells;
+         for ( var $cellIndex = 0; $cellIndex < $sampleCells.length; $cellIndex++ ) {
+             $sampleCells[$cellIndex].onmouseover = function(){
+                 changeBackgroundColor( $sampleColgroup[this.cellIndex], "yellow" );
+                 changeBackgroundColor( $sampleTHeadCells[this.cellIndex], "yellow" );
+                // changeBackgroundColor( $sampleTFootCells[this.cellIndex], "yellow" );
+             };
+             $sampleCells[$cellIndex].onmouseout = function(){
+                 changeBackgroundColor( $sampleColgroup[this.cellIndex], "" );
+                 changeBackgroundColor( $sampleTHeadCells[this.cellIndex], "" );
+                // changeBackgroundColor( $sampleTFootCells[this.cellIndex], "" );
+             };
+         }
+     }
+
+}
+function changeBackgroundColor( $elementReference, $color ){
+     $elementReference.style.backgroundColor = $color;
+}
+
+
+//行だけハイライト
 function highlightTableRow($Table) {
  	//youvar $Table =document.getElementById("table-sample"); // <table> ID名
  	var TR_BG_COLOR = "gray";
  	var TD_BG_COLOR = "yellow";  
 		
 		
-	//テーブル全件総なめ
 	for(var i=0;i<$Table.rows.length;i++) {
-		// 行内 セル位置取得
 		for(var j=0;j<$Table.rows[i].cells.length;j++) {
 			if($Table.rows[i].cells[j].tagName == "TH"){
 			//THは色つけしない
@@ -59,60 +143,36 @@ function highlightTableRow($Table) {
  	  		$Table.rows[i].cells[j].onmouseover =
  	  								 function(){ 
   											// マウスが重なったら cellTBLを実行
-                							//cellTBL(this,BgClr,CellClr);
-              				                //「this」現在マウスが重なっているtd要素 = cells[j]
-              				                //this.parentNodeは、tdの親だからtr要素
-              				                //this.style.backgroundColor =  'yellow';
-              				                //this.parentNode.style.backgroundColor  =  'gray';// tr tag
-											
-											var $td = this;
-											
-											setBgColor($td,  TD_BG_COLOR );
-											setBgColor($td.parentNode, TR_BG_COLOR );
-											//setParentBgColor($td, 'gray');
-              				                //alert(this.cellIndex);
+                							//「this」現在マウスが重なっているtd要素 = cells[j]
+              				                // this.parentNodeは、tdの親だからtr要素
               				                
+											
+											this.style.backgroundColor =  TD_BG_COLOR ;
+              				                this.parentNode.style.backgroundColor  =  TR_BG_COLOR;// tr tag
+										
                 					}
-                					
-                					
         
  		 	$Table.rows[i].cells[j].onmouseout =
  		 						 function(){
-   							                 //cellTBL(this,'','');
-   							         		         this.style.backgroundColor =  '';
-   							         		         this.parentNode.style.backgroundColor  =  '';
+   							         		this.style.backgroundColor =  '';
+   							         		this.parentNode.style.backgroundColor  =  '';
                                  }
 		
 		
 			}
 
- 		}//for
-		
-
-		
-
-	}
-	
-	function setBgColor( $elem, $color ){
-     	$elem.style.backgroundColor = $color;
-	}
-	
-	function setParentBgColor( $elem, $color ){
-     	$elem.parentNode.style.backgroundColor = $color;
-	}
-
-
-	
-	/*
-	function cellTBL(tgtCell,BgClr,CellClr) {
- 		for(var i=0;i<$Table.rows.length;i++) {
-  			$Table.rows[i].cells[tgtCell.cellIndex].style.backgroundColor = BgClr;// 列 背景色
-	    }
- 		tgtCell.style.backgroundColor = CellClr;// セル 背景色
-  		tgtCell.parentNode.style.backgroundColor = BgClr;// 行 背景色
-	}
-	*/
+ 		}//end for inner
+	}//end for outer
 }
+/*定義だけ*/
+function setBgColor( $elem, $color ){
+ 	$elem.style.backgroundColor = $color;
+}
+	
+function setParentBgColor( $elem, $color ){
+  	$elem.parentNode.style.backgroundColor = $color;
+}
+
 </script>
 </head>
 <body>
@@ -160,6 +220,7 @@ function highlightTableRow($Table) {
       <td>ツールチップ</td>
       <td>テーブルcss生成</td>
     </tr>
+    
   </tbody>
 </table>
 </body>
