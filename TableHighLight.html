@@ -4,24 +4,24 @@
  <meta charset="SJIS">
 <title>ハイライト テーブル javascript</title>
 <style type="text/css">
-#TBL{
+#table-sample{
  　background-color: #fffafa; /* 背景色 */
    border-collapse: collapse; /* 枠線の重なり：結合 */
  　border: 2px solid #0000ff; /* ボーダー : 幅,線種,色 */
   　}
 
-#TBL thead {
+#table-sample thead {
   border-bottom:3px #0000ff double;
     }
 
-#TBL th{
+#table-sample th{
  color: #030303;
  background-color: #dbdbdb;
  padding: 5px 7px;  /* 余白：上下　左右；*/
  border:1px #0000ff solid;
   }
 
-#TBL td{
+#table-sample td{
  color:#800000;
  background-color:inherit; /* inherit 親要素の値を継承*/
  padding:5px 7px;
@@ -30,36 +30,83 @@
  </style>
  
  <script>
-window.onload = hLightTBL;
+window.onload = initWindow;
 
-function hLightTBL() {
- 	var Tbl =document.getElementById("TBL"); // <table> ID名
- 	var BgClr = "#d2e9ff"; // マウスが上に来た時の行、列の背景色
- 	var CellClr="pink";  // マウスが上に来た時のセルの背景色
+function initWindow(){
+	var $Table = document.getElementById("table-sample");
+	highlightTableRow($Table);
+	
+}
+
+
+
+function highlightTableRow($Table) {
+ 	//youvar $Table =document.getElementById("table-sample"); // <table> ID名
+ 	var TR_BG_COLOR = "gray";
+ 	var TD_BG_COLOR = "yellow";  
 		
-	for(var i=0;i<Tbl.rows.length;i++) {// 行 位置取得
- 		for(var j=0;j<Tbl.rows[i].cells.length;j++) { // 行内 セル位置取得
-	  		Tbl.rows[i].cells[j].onmouseover = function(){ 
+		
+	//テーブル全件総なめ
+	for(var i=0;i<$Table.rows.length;i++) {
+		// 行内 セル位置取得
+		for(var j=0;j<$Table.rows[i].cells.length;j++) {
+			if($Table.rows[i].cells[j].tagName == "TH"){
+			//THは色つけしない
+		
+		
+			}else{
+				
+ 	  		$Table.rows[i].cells[j].onmouseover =
+ 	  								 function(){ 
   											// マウスが重なったら cellTBLを実行
                 							//cellTBL(this,BgClr,CellClr);
-              				                //「this」現在マウスが重なっているtd要素
-              				                
-              				                this.style.backgroundColor =  'yellow';
-              				                this.parentNode.style.backgroundColor  =  'gray';
+              				                //「this」現在マウスが重なっているtd要素 = cells[j]
+              				                //this.parentNodeは、tdの親だからtr要素
+              				                //this.style.backgroundColor =  'yellow';
+              				                //this.parentNode.style.backgroundColor  =  'gray';// tr tag
+											
+											var $td = this;
+											
+											setBgColor($td,  TD_BG_COLOR );
+											setBgColor($td.parentNode, TR_BG_COLOR );
+											//setParentBgColor($td, 'gray');
+              				                //alert(this.cellIndex);
               				                
                 					}
- 		 	Tbl.rows[i].cells[j].onmouseout = function(){
+                					
+                					
+        
+ 		 	$Table.rows[i].cells[j].onmouseout =
+ 		 						 function(){
    							                 //cellTBL(this,'','');
    							         		         this.style.backgroundColor =  '';
    							         		         this.parentNode.style.backgroundColor  =  '';
                                  }
- 		}
+		
+		
+			}
+
+ 		}//for
+		
+
+		
+
 	}
+	
+	function setBgColor( $elem, $color ){
+     	$elem.style.backgroundColor = $color;
+	}
+	
+	function setParentBgColor( $elem, $color ){
+     	$elem.parentNode.style.backgroundColor = $color;
+	}
+
+
 	
 	/*
 	function cellTBL(tgtCell,BgClr,CellClr) {
- 		for(var i=0;i<Tbl.rows.length;i++) {
-  			Tbl.rows[i].cells[tgtCell.cellIndex].style.backgroundColor = BgClr;// 列 背景色
+ 		for(var i=0;i<$Table.rows.length;i++) {
+  			$Table.rows[i].cells[tgtCell.cellIndex].style.backgroundColor = BgClr;// 列 背景色
 	    }
  		tgtCell.style.backgroundColor = CellClr;// セル 背景色
   		tgtCell.parentNode.style.backgroundColor = BgClr;// 行 背景色
@@ -69,7 +116,11 @@ function hLightTBL() {
 </script>
 </head>
 <body>
-<table id="TBL">
+<table id="table-sample">
+<colgroup span="1"></colgroup>
+<colgroup span="1"></colgroup>
+<colgroup span="1"></colgroup>
+<colgroup span="1"></colgroup>
 <thead>
  <tr>
     <th>項目名</th>
