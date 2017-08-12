@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+ <meta charset="UTF-8" />
+ <title>テーブル操作</title>
+ <script src="./jquery-3.2.1.min.js" ></script>
+ <script src="./sum.js"></script>
+ 
+ <script>
+  //argemetns objectとRegExpのコンビネーションでprintf
+  function printf(format){
+  	for(var i=1; i<arguments.length; i++){
+  		var pattern = new RegExp('\\{' + (i - 1) + '\\}'  ,'g');
+  		//alert(pattern);
+  		
+  		format = format.replace(pattern, arguments[i]);
+  	}
+  	
+  	alert(format);
+  	
+  }
+  
+  
+  
+  
+
+//namesapace
+//どちらでも可
+//var Finder = function(){};
+var Finder = [];
+
+Finder.clearStyle = function(){
+	$('#testTable').find('td.code').each(function () {
+		$(this).attr('style', ''); 
+ 		$(this).next().attr('style', '');
+ 		
+ 	});
+}
+
+Finder.findByKey = function( key){
+ var IsFound = false;
+ $('#testTable').each(function () {
+ 
+    $(this).find('td.code').each(function () {
+     //if($(this).text() == $('#input_text').val()) {
+     if($(this).text() == key) {
+     
+         $(this).attr('style', 'background-color:yellow');
+         $(this).next().attr('style', 'background-color:yellow');
+         IsFound = true;
+         return false; //eachから抜ける
+     } else {
+         IsFound = false;
+     }
+    });
+    });
+    
+    if(IsFound){
+    	return true;//戻り値
+    }
+}
+
+Finder.MaxKey = function(){
+ var tmpMax;
+ var row;
+ tmpMax=$('#testTable td:first').text();
+ var table = document.getElementById('testTable');
+
+ var i_start=1; 
+ for (var i = i_start; i < table.rows.length; i++ ) {  
+	var tmpMax =  table.rows[1].cells[0].innerHTML;
+    var row = table.rows[i];  
+    for (var j = 0; j < row.cells.length-1; j++ ) 
+    {  
+       //console.log(row.cells[j].innerHTML);
+        if(tmpMax < row.cells[j])
+        {
+        	tmpMax = row.cells[j].innerHTML;
+        }
+    }  
+ }  
+
+ return tmpMax;
+
+}
+
+var sumRow = function(val1, val2, dsp){
+	// alert(22);
+	console.log("called");
+	rowSum = val1*1+val2*1;
+	$('#'+dsp).val(rowSum);
+	
+} 
+
+/*
+テーブルタグを全てもらって、その行と列を計算し、合計に表示するパターン
+*/
+
+
+
+/*
+tdをもらって、その行を計算し、合計に表示するパターン
+*/
+var abc = function(arg){
+	console.log("test:abc");
+	// console.log(arg);
+	// console.log(arg.closest("tr"));
+	var tr=arg.closest("tr");
+	var input = $(tr).find('input');//1行分のinput
+	var sum=0;
+
+	$(tr).find('.sum').val(0);//表示の計をクリア
+	$(input).each(function(i,elm){
+		console.log(elm.value);//列の値
+		sum+=elm.value*1;//横計
+	});
+
+	//表示する
+	$(tr).find('.sum').val(sum);
+}
+
+var sum = function(arg){
+	console.log("test:table");
+	var tr = arg.find("tr");
+	console.log(tr);
+}
+
+$(document).ready(function(){
+	//Initialize
+	$('div.Message').hide();
+	
+	//$.hoge($('input[type=text]'));
+	//$('#test').confirm();
+	// $.confirm();
+	// $("[class='sumRow']").on("blur", sumRow());
+	// $("#val1_0").on("blur", sumRow());
+	// $("#val2_0").on("blur", sumRow());
+	
+	$("[class='sumRow']").on("blur", function(){
+		var tr =$(this).closest("tr");       //trタグはこれで取れる
+		var table =$(this).closest("table"); //tableタグはこれで取れる
+		// abc($(this));//tdタグ要素
+		sum(table);
+
+	});
+	
+	/* 
+	$("#val1_0").on("blur", function(){
+		//自分の値とその隣の列のDOMを渡す
+		var myVal      = $(this).val();
+		var nextColVal = $("#val2_0").val();
+		var target=     'sum0';
+		sumRow(myVal,nextColVal,target);
+		// console.log("t1");
+	});
+	
+	$("#val2_0").on("blur", function(){
+		var myVal      = $("#val1_0").val();
+		var nextColVal = $(this).val();
+		var target=     'sum0';
+		sumRow(myVal,nextColVal,target);
+		// console.log("t2");
+		
+	});
+	 */
+	
+	
+	//Event handler
+ 	$('#register').on("click", function() {
+		
+	
+ 		//console.log('test');
+ 		
+ 		var MaxKey = Finder.MaxKey();
+ 		var NewKey = MaxKey*1 + 1;
+ 		var NewVal =  $('#input_text').val()
+ 		if(NewVal ==""){
+ 		
+ 			$('div.Message').text("値が未入力です").css("background-color", "pink").show();
+ 			$('#input_text').focus().select().css("background-color", "fuchsia");
+ 			return ;
+ 			
+ 		}
+		
+		$('tbody').append('<tr><td class=\'code\'>' + NewKey + '</td><td>' + NewVal + '</td></tr>'); 
+		//printf("登録しました。Key={0} Value={1}" , NewKey, NewVal );
+ 		$('div.Message').text('登録しました。Key=' + NewKey + ' Value='  + NewVal ).css("background-color", "aqua").show();
+ 		
+ 		Finder.clearStyle();
+ 		Finder.findByKey(NewKey);
+ 		
+		
+
+ 	});
+ 
+ 	//Seach
+ 	 $(document).on("click", "[id='seach']", function() {
+ 		var key =  $('#input_text').val();
+		
+		Finder.clearStyle();	
+ 		if (! Finder.findByKey(key) ){
+ 			//alert("見つかりませんでした。Key=" + key);
+ 			$('div.Message').text("見つかりませんでした。Key=" + key).css("background-color", "pink").show();
+ 			
+ 		}else{
+ 			$('div.Message').text("");
+ 			$('div.Message').hide();
+ 		
+ 		
+ 		}
+ 		
+ 		
+  	});
+ });
+ </script>
+ </head>
+ <body>
+ <h1>
+HTMLテーブルに検索・登録サンプル
+ </h1>
+<div class="condition">
+ <input type="text" id="input_text"" />
+ <button type="button" id="seach"> Search </button>
+ <button type="button" id="register"> Register </button>
+ <button type="button" id="test"> Register </button>
+</div>
+<div class="Message">
+</div>
+<div class="Content">
+ <table id="testTable" border ="1">
+ <tr>
+ <th>Key</th><th>Value</th><th>Value</th><th>SUM</th>
+ </tr>
+ <script type="text/javascript">
+ for (i=0; i<=10;i++){
+	var randomVal=Math.floor(Math.random() *1000);
+	var randomVal2=Math.floor(Math.random() *130);
+	
+ 
+     document.write("<tr>");
+     document.write("<td class=\"code\">" + i + "</td>");
+     document.write('<td>'+'<input id=val1_' + i + ' class="sumRow" type="text" value="' +  randomVal  +'" ></td>');
+     document.write('<td>'+'<input id=val2_' + i + ' class="sumRow" type="text" value="' +  randomVal2  +'" ></td>');
+     document.write('<td>'+'<input id=sum' + i + ' class="sum" type="text" value="" ></td>');
+     
+	 document.write("</tr>");
+ }
+ </script>
+ </table>
+</div>
+ </body>
+ </html>
