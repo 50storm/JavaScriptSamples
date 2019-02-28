@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>index</title>
+</head>
+<body>
+<style>
+  body {
+    margin: 20px;
+  }
+  .item {
+    padding: 10px;
+    width: 80px;
+    height: 80px;
+    background-color: #2e6da4;
+    color: #FFFFFF;
+  }
+  .item:hover {
+    cursor: pointer;
+  }
+  
+  .double{
+	zoom:200%
+  }
+  
+  .div1{
+	  width:300px;
+	  height:300px;
+	  border: inset 10px #ff0000;
+	  }
+  
+</style>
+  <script src="./js/jquery-3.3.1.min.js"></script>
+  <script src="./js/jquery-ui.min.js"></script>
+  <!-- jQuery Rotate Plugin -->
+ <script src="./js/jQueryRotate.js"></script>
+<script>
+
+//DOM読み込みの完了を待ってから、イベントリスナを登録
+document.addEventListener("DOMContentLoaded", function(){
+	//回転９０度
+	let value = 0
+		$("#divArea").rotate({
+		bind:
+		{
+			click: function(){
+			value +=90;
+			$(this).rotate({ animateTo:value})
+			}
+		}
+	});
+})
+</script>
+<body>
+
+<div>
+<h1>赤枠内をクリックすると回転します。</h1>
+</div>
+
+<div id="divArea" class="div1">
+<button id="obj1" class="zoomTarget" >オブジェクト1</button><br>
+<button class="zoomTarget" >オブジェクト2</button>
+<button class="zoomTarget" >オブジェクト3</button>
+</div>
+<div>
+<a href="index.html">サンプル一覧</a>
+</div>
+</body>
+</html>

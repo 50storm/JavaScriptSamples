@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  <meta charset="UTF-8">
+  <style>
+  body {
+    margin: 20px;
+  }
+  .item {
+    padding: 10px;
+    width: 80px;
+    height: 80px;
+    background-color: #2e6da4;
+    color: #FFFFFF;
+  }
+  .item:hover {
+    cursor: pointer;
+  }
+  
+  .double{
+	zoom:200%
+  }
+  
+</style>
+  
+  <title>index</title>
+</head>
+<body>
+
+<script>
+
+//cssのzoomプロパティを変更する関数
+function setZoom (){
+	let valZoom = document.querySelector("#valZoom").value;
+	let zoomTargets = document.querySelectorAll(".zoomTarget");
+		for(let i=0; i < zoomTargets.length; i++){
+			zoomTargets[i].style.zoom　=valZoom + "%";
+		}
+
+}
+
+
+//DOM読み込みの完了を待ってから、イベントリスナを登録
+document.addEventListener("DOMContentLoaded", function(){
+	let btnZoom = document.querySelector('#btnZoom');
+	btnZoom.addEventListener("click", setZoom, false);
+})
+</script>
+<body>
+
+<div>
+<h1>拡大・縮小</h1>
+<button id="btnZoom" >zoom</button>
+<input type="text" id="valZoom" value="200" ></input>%
+<div id="div1">
+<button class="zoomTarget" >オブジェクト1</button>
+<button class="zoomTarget" >オブジェクト2</button>
+</div>
+</div>
+<div>
+<a href="index.html">サンプル一覧</a>
+</div>
+</body>
+</html>

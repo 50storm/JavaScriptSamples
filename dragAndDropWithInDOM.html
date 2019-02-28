@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Draggable - Constrain movement</title>
+  
+  
+  <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> -->
+  <!-- <script src="http://code.jquery.com/jquery-1.8.3.js"></script> -->
+  <!-- <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script> -->
+  <!-- <link rel="stylesheet" href="/demos/style.css" /> -->
+  
+  <link rel="stylesheet" href="./js/jquery-ui.css" />
+  <link rel="stylesheet" href="./js/jquery-ui.theme.css" />
+  <script src="./js/jquery-3.3.1.min.js"></script>
+  <script src="./js/jquery-ui.min.js"></script>
+
+  
+  <style>
+  .draggable { width: 90px; height: 90px; padding: 0.5em; float: left; margin: 0 10px 10px 0; }
+  #draggable, #draggable2 { margin-bottom:20px; }
+  #draggable { cursor: n-resize; }
+  #draggable2 { cursor: e-resize; }
+  #containment-wrapper { width: 95%; height:150px; border:2px solid blue; padding: 10px; }
+  h3 { clear: left; }
+  </style>
+  <script>
+  $(function() {
+    $( "#draggable" ).draggable({ axis: "y" }); //y軸方向のみ
+    $( "#draggable2" ).draggable({ axis: "x" }); //x軸方向のみ
+    $( "#draggable3" ).draggable({ containment: "#containment-wrapper", scroll: false }); //divタグのidに設定
+    $( "#draggable5" ).draggable({ containment: "parent" });  //親のDIV
+  });
+  </script>
+</head>
+<body>
+<h3>移動方向の制御:</h3>
+<div id="draggable" class="draggable ui-widget-content">
+  <p>縦方向にしか動きません</p>
+</div>
+<div id="draggable2" class="draggable ui-widget-content">
+  <p>横方向にしか動きません</p>
+</div>
+<h3>DOM要素内に限定:</h3>
+<div id="containment-wrapper">
+  <div id="draggable3" class="draggable ui-widget-content">
+    <p>青色のボックス内のみ</p>
+  </div>
+  <div class="draggable ui-widget-content">
+    <p id="draggable5" class="ui-widget-header">親コンテナ内</p>
+  </div>
+</div>
+
+<div>
+<a href="index.html">サンプル一覧</a>
+</div>
+</body>
+</html>
