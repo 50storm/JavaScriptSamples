@@ -1,27 +1,20 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-                    "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
 <head>
 <meta charset="UTF-8" />
   <script src="http://code.jquery.com/jquery-latest.js"></script>
-  
+ 
   <script>
-  $(document).ready(function(){
-	$('input[name=txt1]').on("focus", function() {
-		//alert("test");
-		//var calender = document.getElementById('table-calender').style.display = "";
-		//var calender = document.getElementById('table-calender');
-		var calender = document.getElementById('test-calender');
-		
-		calender.style.display = "";
-		
-	
-	});
-	$('input[name=txt1]').on("blur", function() {
-		var calender = document.getElementById('test-calender');	
-		calender.style.display = "none";
-	
-	});
+  document.addEventListener("DOMContentLoaded", function (event) {
+    let txtCalender = document.querySelector("#txtCalender");
+    txtCalender.addEventListener('focus',function(){
+        let calender = document.querySelector('#test-calender');
+        calender.style.display = "";
+    });
+    txtCalender.addEventListener('blur',function(){
+        let calender = document.querySelector('#test-calender');
+        calender.style.display = "none";
+    });
   });
   </script>
   
@@ -29,14 +22,9 @@
 <body>
 
 <div>
-<input type="text" name="txt1" value="フォーカス当てるとカレンダー表示" />
+<h1> フォーカス当てるとカレンダー表示 </h1>
+<input type="text" id="txtCalender" name="txt1" value="" />
 </div>
-<!--
-<div id="table-calender" style="display:none;" >
--->
-<!--
-<div id="table-calender" >
--->
 
 <script type="text/javascript">
 //NameSpace的にまとめた。。
