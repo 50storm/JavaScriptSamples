@@ -1,33 +1,3 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="UTF-8" />
-  <script src="http://code.jquery.com/jquery-latest.js"></script>
- 
-  <script>
-  document.addEventListener("DOMContentLoaded", function (event) {
-    let txtCalender = document.querySelector("#txtCalender");
-    txtCalender.addEventListener('focus',function(){
-        let calender = document.querySelector('#test-calender');
-        calender.style.display = "";
-    });
-    txtCalender.addEventListener('blur',function(){
-        let calender = document.querySelector('#test-calender');
-        calender.style.display = "none";
-    });
-  });
-  </script>
-  
-</head>
-<body>
-
-<div>
-<h1> フォーカス当てるとカレンダー表示 </h1>
-<input type="text" id="txtCalender" name="txt1" value="" />
-</div>
-
-<script type="text/javascript">
-//NameSpace的にまとめた。。
 var Calendar = [];
 
 Calendar.NonDisplay=function($Table){
@@ -129,10 +99,3 @@ Calendar.WriteTableFooter();
 var $Calender = document.getElementById('test-calender');
 
 Calendar.NonDisplay( $Calender);
-   </script>
-   <!--
-   </div>
-   -->
-</body>
-</html>
-            

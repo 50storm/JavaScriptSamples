@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+ 
+  <script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+    let txtCalender = document.querySelector("#txtCalender");
+    txtCalender.addEventListener('focus',function(){
+        let calender = document.querySelector('#test-calender');
+        calender.style.display = "";
+    });
+    txtCalender.addEventListener('blur',function(){
+        let calender = document.querySelector('#test-calender');
+        calender.style.display = "none";
+    });
+  });
+  </script>
+  <script type="text/javascript" src="./js/calender.js"></script>
+</head>
+<body>
+<div>
+    <input type="text" id="txtCalender" name="txt1" value="" placeholder="フォーカス当てるとカレンダー表示" />
+</div>
+</body>
+</html>
+            
