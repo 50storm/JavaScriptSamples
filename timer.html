@@ -7,7 +7,7 @@
 <script>   
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    jsTimer();
+//    jsTimer();
 });
 
 let i = 0; let timerId = "";
@@ -21,15 +21,18 @@ function jsTimer(){
 }
 
 function clearJsTimer() {
-  window.clearTimeout(timeoutID);
+    clearTimeout(timerId);   
+    i=0;
+    document.querySelector('#result').innerText = 0;
 }
 
 </script> 
 </head> 
 <body> 
-<p id ="result">Hello World</p> 
+<p id ="result">----</p> 
 <form>
-<button type="buton" id="clearTimer" onClick="clearJsTimer" > clear </button>
+    <button type="button" id="startTimer" onClick="jsTimer()" > start </button>
+    <button type="button" id="clearTimer" onClick="clearJsTimer()" > clear </button>
 </form>
 </body> 
 </html>
