@@ -1,0 +1,35 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset=”utf-8″ /> 
+<title>HTML 5 complete</title> 
+<style> article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; } </style> 
+<script>   
+
+document.addEventListener("DOMContentLoaded", function (event) {
+    jsTimer();
+});
+
+let i = 0; let timerId = "";
+function jsTimer(){
+    let dispText;
+    i=i+1;
+    let elem  = document.querySelector('#result');
+    dispText = i + "秒";
+    elem.innerText = dispText;
+    timerId = setTimeout( jsTimer, 1000 );
+}
+
+function clearJsTimer() {
+  window.clearTimeout(timeoutID);
+}
+
+</script> 
+</head> 
+<body> 
+<p id ="result">Hello World</p> 
+<form>
+<button type="buton" id="clearTimer" onClick="clearJsTimer" > clear </button>
+</form>
+</body> 
+</html>
