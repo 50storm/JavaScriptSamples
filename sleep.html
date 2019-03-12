@@ -1,0 +1,71 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset=”utf-8″ /> 
+<title>HTML 5 complete</title> 
+<style> article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; } </style> 
+<script>   
+
+// Promiseを使う方法
+function sleepByPromise(sec) {
+    // return new Promise( resolve => setTimeout(resolve, sec*1000) );
+    return new Promise( function (resolve, reject) { 
+                        console.log(" before setTimeout");
+                        // setTimeout(resolve, sec*1000);
+                        setTimeout(function(){
+                            console.log('ロジック！');
+                            resolve('おわりました');
+                            
+                        }, sec*1000);
+                        console.log(" after setTimeout");
+                    });
+}
+ 
+// async修飾子を使って非同期関数を宣言します。
+async function asyncWait(sec) {
+    console.log('asyncWait ' + sec.toString() + ' sec right now!');
+    // await句を使って、Promiseの非同期処理が完了するまで待機します。
+    let result = await sleepByPromise(sec);
+    console.log('result ' + result);
+    console.log('asyncWait ' + sec.toString() + ' sec done!');
+
+}
+
+////////////////////////////////////////////
+
+function SetIimeOutSleep(waitSec, callbackFunc) {
+ 
+  var spanedSec = 0;
+ 
+  var waitFunc = () => {
+      spanedSec++;
+      if (spanedSec >= waitSec) {
+          if (callbackFunc) callbackFunc();
+          return;
+      }
+      clearTimeout(id);
+      id = setTimeout(waitFunc, 1000);
+  };
+ 
+  var id = setTimeout(waitFunc, 1000);
+ 
+}
+
+
+document.addEventListener("DOMContentLoaded", function (event) {
+    document.querySelector('#result').innerHTML='sleep start!';
+    asyncWait(5); 
+    document.querySelector('#result').innerHTML='sleep end!'; //非同期なので、wait(5000);をブロックしない。
+    
+    // SetIimeOutSleep(5, function() {
+        // console.log("SetIimeOutSleep => " + '5秒経過しました！');
+  
+    // });
+    
+});
+</script> 
+</head> 
+<body> 
+<div id ="result">----</div> 
+</body> 
+</html>

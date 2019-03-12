@@ -1,0 +1,43 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset=”utf-8″ /> 
+<title>HTML 5 complete</title> 
+<style> article, aside, dialog, figure, footer, header, hgroup, menu, nav, section { display: block; } </style> 
+<script>   
+
+var arr = new Array();
+document.addEventListener("DOMContentLoaded", function (event) {
+    for(let i=1 ; i <= 3; i++){
+        arr.push(i);
+    }
+    
+    document.querySelector('#result').innerHTML ="";
+    arr.forEach((value)=>{
+        
+        document.querySelector('#result').innerHTML += value + " ";
+    });
+    
+    var firstVal = arr.shift();
+    firstVal = arr.shift();
+    firstVal = arr.shift();
+    firstVal = arr.shift();
+    
+    document.querySelector('#result2').innerHTML ="";
+    arr.forEach((value)=>{
+        
+        document.querySelector('#result2').innerHTML += value + " ";
+    });
+    
+    
+});
+
+
+
+</script> 
+</head> 
+<body> 
+<div id ="result">----</div>
+<div id ="result2">----</div>
+</body> 
+</html>
