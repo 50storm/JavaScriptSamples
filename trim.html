@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML 5 complete</title>
+<style>
+article, aside, dialog, figure, footer, header,
+hgroup, menu, nav, section { display: block; }
+</style>
+<script>
+
+// https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Regular_Expressions
+// \s : スペース、タブ、改ページ、改行を含むホワイトスペース文字にマッチ  [ \f\n\r\t\v​\u00a0\u1680​\u180e\u2000​-\u200a​\u2028\u2029\u202f\u205f​\u3000\ufeff] に相当
+// +  : 直前の文字の 1 回以上の繰り返しにマッチ
+
+
+//=============================
+// 先頭の空白を削除
+//=============================
+String.prototype.ltrim = function () {
+    return this.replace(/^\s+/, "");
+}
+//=============================
+// 末尾の空白を削除
+//=============================
+String.prototype.rtrim = function () {
+    return this.replace(/\s+$/, "");
+}
+//=============================
+// 先頭および末尾の空白を削除
+//=============================
+String.prototype.trim = function () {
+     return this.replace(/^\s+|\s+$/g, "");
+    // 以下でも同じ。
+    //return this.replace(/^( |　)+|( |　)+$/g, "");
+}
+
+function testTrim(){
+    let txtValue = document.querySelector("#txtInput").value;
+    document.querySelector("#txtInput").value = txtValue.trim();
+}
+
+function testLtrim(){
+    let txtValue = document.querySelector("#txtInput").value;
+    document.querySelector("#txtInput").value = txtValue.ltrim();
+
+}
+
+function testRtrim(){
+    let txtValue = document.querySelector("#txtInput").value;
+    document.querySelector("#txtInput").value = txtValue.rtrim();
+
+}
+
+</script>
+
+</head>
+<body>
+<form>
+    <input type="text" id="txtInput" value="text" />
+    <button type="button" onclick="testTrim();">Trim</button>
+    <button type="button" onclick="testLtrim();">Left Trim</button>
+    <button type="button" onclick="testRtrim();">Right Trim</button>
+</form>
+</body>
+</html>
