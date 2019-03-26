@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=”utf-8″ />
+<title>HTML 5 complete</title>
+<style>
+article, aside, dialog, figure, footer, header,
+hgroup, menu, nav, section { display: block; }
+</style>
+
+    <script>
+        //liタグをすべて削除
+        function removeList() {
+            let ulRooms = document.querySelector('#ulRoom');
+            while (ulRooms.firstChild) {
+                ulRooms.removeChild(ulRooms.firstChild);
+        
+            }
+        }
+        
+    </script>    
+
+</head>
+<body>
+    <button type="button" onclick="removeList();">removeList</button>
+    <ul class="" id="ulRoom">
+        <li>room01</li>
+        <li>room02</li>
+    </ul>
+</body>
+</html>
